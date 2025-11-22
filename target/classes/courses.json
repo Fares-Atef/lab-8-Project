@@ -1,0 +1,86 @@
+[
+  {
+    "courseId": 1,
+    "title": "Probability",
+    "description": "CCE",
+    "instructor": {
+      "userId": 3,
+      "username": "ahmed",
+      "email": "ahmed@gmail.com",
+      "passwordHash": "4cc8f4d609b717356701c57a03e737e5ac8fe885da8c7163d3de47e01849c635",
+      "role": "instructor"
+    },
+    "instructorEmail": "ahmed@gmail.com",
+    "lessons": [
+      {
+        "lessonId": 1,
+        "title": "Statistics",
+        "content": "Methods",
+        "resources": []
+      },
+      {
+        "lessonId": 2,
+        "title": "prob",
+        "content": "how to solve",
+        "resources": []
+      }
+    ],
+    "enrolledStudents": [
+      {
+        "enrolledCourseIds": [
+          1
+        ],
+        "completedLessonIds": [],
+        "userId": 8,
+        "username": "Salem",
+        "email": "salem@gmail.com",
+        "passwordHash": "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
+        "role": "student"
+      }
+    ]
+  },
+  {
+    "courseId": 2,
+    "title": "Control Systems",
+    "description": "CCE",
+    "instructor": {
+      "userId": 3,
+      "username": "ahmed",
+      "email": "ahmed@gmail.com",
+      "passwordHash": "4cc8f4d609b717356701c57a03e737e5ac8fe885da8c7163d3de47e01849c635",
+      "role": "instructor"
+    },
+    "instructorEmail": "ahmed@gmail.com",
+    "lessons": [
+      {
+        "lessonId": 3,
+        "title": "Root Locus",
+        "content": "How to solve root locus",
+        "resources": []
+      }
+    ],
+    "enrolledStudents": []
+  },
+  {
+    "courseId": 3,
+    "title": "Math4",
+    "description": "CCE",
+    "instructor": {
+      "userId": 6,
+      "username": "Ramy",
+      "email": "ramy@gmail.com",
+      "passwordHash": "91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203",
+      "role": "instructor"
+    },
+    "instructorEmail": "ramy@gmail.com",
+    "lessons": [
+      {
+        "lessonId": 4,
+        "title": "integration",
+        "content": "methods",
+        "resources": []
+      }
+    ],
+    "enrolledStudents": []
+  }
+]

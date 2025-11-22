@@ -1,0 +1,15 @@
+[
+  {
+    "courseId": 1,
+    "title": "Math4",
+    "description": "Differential equations",
+    "lessons": [
+      {
+        "lessonId": 1,
+        "title": "Integration",
+        "content": "Integration Methods",
+        "resources": []
+      }
+    ]
+  }
+]
