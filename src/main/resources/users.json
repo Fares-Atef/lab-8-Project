@@ -1,0 +1,49 @@
+[
+  {
+    "userId": 1,
+    "username": "zeyad",
+    "email": "zeyad@gmail.com",
+    "passwordHash": "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
+    "role": "instructor"
+  },
+  {
+    "enrolledCourseIds": [
+      1,
+      2
+    ],
+    "completedLessonIds": [
+      1,
+      2
+    ],
+    "userId": 2,
+    "username": "yossef",
+    "email": "yossef@gmail.com",
+    "passwordHash": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+    "role": "student"
+  },
+  {
+    "userId": 3,
+    "username": "ahmed",
+    "email": "ahmed@gmail.com",
+    "passwordHash": "4cc8f4d609b717356701c57a03e737e5ac8fe885da8c7163d3de47e01849c635",
+    "role": "instructor"
+  },
+  {
+    "userId": 6,
+    "username": "Ramy",
+    "email": "ramy@gmail.com",
+    "passwordHash": "91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203",
+    "role": "instructor"
+  },
+  {
+    "enrolledCourseIds": [
+      1
+    ],
+    "completedLessonIds": [],
+    "userId": 8,
+    "username": "Salem",
+    "email": "salem@gmail.com",
+    "passwordHash": "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
+    "role": "student"
+  }
+]
