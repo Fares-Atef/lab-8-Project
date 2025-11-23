@@ -35,32 +35,21 @@ public class Course {
         this.enrolledStudents = new ArrayList<>();
     }
 
-
     public void setCourseId(int id){
         this.courseId = id;
         if(id >= courseCounter)
             courseCounter = id + 1;   // ★ يمنع تكرار الـ IDs
     }
 
-    public void setInstructorEmail(String email){
-        this.instructorEmail = email;
-    }
+    public void setInstructorEmail(String email){ this.instructorEmail = email; }
 
-    public void setTitle(String title){
-        this.title = (title != null) ? title : this.title;
-    }
+    public void setTitle(String title){ this.title = (title != null) ? title : this.title; }
 
-    public void setDescription(String description){
-        this.description = (description != null) ? description : this.description;
-    }
+    public void setDescription(String description){ this.description = (description != null) ? description : this.description; }
 
-    public void setLessons(List<Lesson> lessons){
-        this.lessons = (lessons != null) ? lessons : new ArrayList<>();
-    }
+    public void setLessons(List<Lesson> lessons){ this.lessons = (lessons != null) ? lessons : new ArrayList<>(); }
 
-    public void setEnrolledStudents(List<Student> students){
-        this.enrolledStudents = (students != null) ? students : new ArrayList<>();
-    }
+    public void setEnrolledStudents(List<Student> students){ this.enrolledStudents = (students != null) ? students : new ArrayList<>(); }
 
     // ======== Instructor Handling ========
     public void setInstructor(Instructor instructor){

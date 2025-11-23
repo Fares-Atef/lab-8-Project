@@ -6,15 +6,30 @@ import com.example.models.Course;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import javax.swing.*;
+import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 
 public class CertificateGenerator {
 
-    public static void generatePDF(Certificate cert, Student student, Course course) {
+    public static Certificate generatePDF(Student student, Course course) {
+        Certificate cert = new Certificate(course.getCourseId(), student.getId());
+
         try {
-            String fileName = "Certificate_" + student.getUsername() + "_" + course.getTitle() + ".pdf";
+            // تنظيف اسم الكورس من أي رموز قد تسبب مشاكل
+            String safeCourseTitle = course.getTitle().replaceAll("[^a-zA-Z0-9_\\- ]", "");
+            String defaultFileName = "Certificate_" + student.getUsername() + "_" + safeCourseTitle + ".pdf";
+
+            // اختر مكان الحفظ
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setSelectedFile(new File(defaultFileName));
+            int option = fileChooser.showSaveDialog(null);
+            if(option != JFileChooser.APPROVE_OPTION) return cert;
+
+            File file = fileChooser.getSelectedFile();
             Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(fileName));
+            PdfWriter.getInstance(document, new FileOutputStream(file));
             document.open();
 
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 24);
@@ -30,13 +45,16 @@ public class CertificateGenerator {
             document.add(new Paragraph("has successfully completed the course:", textFont));
             document.add(new Paragraph(course.getTitle(), titleFont));
             document.add(new Paragraph(" "));
-
             document.add(new Paragraph("Issued on: " + cert.getIssueDate(), textFont));
 
             document.close();
-            System.out.println("Certificate PDF generated: " + fileName);
+            JOptionPane.showMessageDialog(null, "Certificate PDF generated at:\n" + file.getAbsolutePath());
+
         } catch (Exception e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error generating certificate PDF:\n" + e.getMessage());
         }
+
+        return cert;
     }
 }

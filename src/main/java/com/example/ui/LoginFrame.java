@@ -1,5 +1,6 @@
 package com.example.ui;
 
+import com.example.models.Admin;
 import com.example.models.Instructor;
 import com.example.models.Student;
 import com.example.models.User;
@@ -51,6 +52,9 @@ public class LoginFrame extends JFrame {
                     new InstructorDashboardFrame((Instructor) user);
                 } else if (user instanceof Student) {
                     new StudentDashboardFrame((Student) user);
+                }
+                else if (user instanceof Admin){
+                    new AdminDashboardFrame((Admin) user);
                 }
 
             } else {

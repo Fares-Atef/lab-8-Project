@@ -2,6 +2,7 @@ package com.example.services;
 
 import com.example.database.JsonDatabaseManager;
 import com.example.models.Course;
+import com.example.models.CourseStatus;
 import com.example.models.Lesson;
 import com.example.models.Student;
 
@@ -20,13 +21,23 @@ public class CourseService {
     }
 
     // الكورسات المتاحة للطالب (غير مسجل فيها)
+    // الكورسات المتاحة للطالب (Approved فقط + مش مسجل فيها)
     public List<Course> getAvailableCourses(Student student){
         List<Course> available = new ArrayList<>();
         for(Course c : db.getCourses()){
-            if(!student.getEnrolledCourseIds().contains(c.getCourseId())) available.add(c);
+
+            // لازم يكون الكورس Approved فقط
+            if(c.getStatus() != CourseStatus.APPROVED)
+                continue;
+
+            // مش مسجل فيه بالفعل
+            if(!student.getEnrolledCourseIds().contains(c.getCourseId())) {
+                available.add(c);
+            }
         }
         return available;
     }
+
 
     // كورسات الطالب التي لم يكملها بالكامل بعد
     public List<Course> getPendingCourses(Student student){
@@ -65,4 +76,10 @@ public class CourseService {
     public void addCourse(Course course){ db.addCourse(course); }
 
     public void saveCourses(){ db.saveCourses(); }
+
+    public void deleteCourse(int courseId){
+        db.getCourses().removeIf(c -> c.getCourseId() == courseId);
+        saveCourses();
+    }
+
 }

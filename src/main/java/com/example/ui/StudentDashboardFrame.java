@@ -2,15 +2,12 @@ package com.example.ui;
 
 import com.example.models.*;
 import com.example.services.CourseService;
-import com.example.database.JsonDatabaseManager;
 import com.example.utils.CertificateGenerator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.List;
 
 public class StudentDashboardFrame extends JFrame {
@@ -35,17 +32,17 @@ public class StudentDashboardFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JTabbedPane tabbedPane = new JTabbedPane();
+
+        // ================= Top Panel =================
         JPanel topPanel = new JPanel(new BorderLayout());
         JLabel welcomeLabel = new JLabel("Welcome, " + student.getUsername());
         topPanel.add(welcomeLabel, BorderLayout.WEST);
-
         JButton logoutBtn = new JButton("Logout");
         logoutBtn.addActionListener(e -> {
-            dispose(); // اغلاق الـ Dashboard الحالي
-            new LoginFrame(); // فتح Login Frame جديد
+            dispose();
+            new LoginFrame().setVisible(true);
         });
         topPanel.add(logoutBtn, BorderLayout.EAST);
-
         add(topPanel, BorderLayout.NORTH);
 
         // ================= Available Courses =================
@@ -84,28 +81,38 @@ public class StudentDashboardFrame extends JFrame {
         tabbedPane.add("Certificates", certPanel);
 
         add(tabbedPane, BorderLayout.CENTER);
-        setVisible(true);
 
-        // ================= Search =================
-        searchField.addKeyListener(new KeyAdapter() {
-            public void keyReleased(KeyEvent e) {
-                refreshAvailableCourses(searchField.getText());
-            }
+
+        // ================= Search Listener =================
+        searchField.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
+            public void insertUpdate(javax.swing.event.DocumentEvent e) { refreshAvailableCourses(searchField.getText()); }
+            public void removeUpdate(javax.swing.event.DocumentEvent e) { refreshAvailableCourses(searchField.getText()); }
+            public void changedUpdate(javax.swing.event.DocumentEvent e) { refreshAvailableCourses(searchField.getText()); }
         });
 
-        // أول ما نفتح الإطار، نضيف البيانات
+        // ================= Refresh All Tables =================
+
         refreshAvailableCourses();
         refreshEnrolledCourses();
         refreshCertificates();
+
+        setVisible(true);
     }
 
-    // ================= Refresh Tables =================
-    public void refreshAvailableCourses() { refreshAvailableCourses(""); }
-
+    // ================= Refresh Available Courses =================
+    public void refreshAvailableCourses() {
+        if (availableTable.isEditing()) {
+            availableTable.getCellEditor().stopCellEditing();
+        }
+        refreshAvailableCourses(""); }
     private void refreshAvailableCourses(String filter) {
+
         availableModel.setRowCount(0);
         List<Course> courses = courseService.getAvailableCourses(student);
-        if(courses == null || courses.isEmpty()) return;
+        if(courses == null) return;
+        if (availableTable.isEditing()) {
+            availableTable.getCellEditor().stopCellEditing();
+        }
 
         for(Course c : courses){
             if(filter.isEmpty() || c.getTitle().toLowerCase().contains(filter.toLowerCase())){
@@ -117,20 +124,32 @@ public class StudentDashboardFrame extends JFrame {
         if(availableTable.getRowCount() > 0){
             availableTable.getColumn("Action").setCellRenderer(new ButtonRenderer());
             availableTable.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "Enroll", courseId -> {
-                if(courseId == -1) return;
                 Course c = courseService.getCourseById(courseId);
-                if(c != null) student.enrollCourse(c);
-                refreshEnrolledCourses();
-                refreshAvailableCourses();
-                courseService.saveCourses();
+                if(c != null && !student.getEnrolledCourses().contains(c)){
+                    if(c.getStatus() != CourseStatus.APPROVED){
+                        JOptionPane.showMessageDialog(this,
+                                "This course is not approved yet.",
+                                "Not Allowed",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    student.enrollCourse(c);
+                    courseService.saveCourses();
+                    refreshEnrolledCourses();
+                    refreshAvailableCourses();
+                }
             }));
         }
     }
 
+    // ================= Refresh Enrolled Courses =================
     public void refreshEnrolledCourses() {
+        if (enrolledTable.isEditing()) {
+            enrolledTable.getCellEditor().stopCellEditing();
+        }
         enrolledModel.setRowCount(0);
         List<Course> courses = student.getEnrolledCourses();
-        if(courses == null || courses.isEmpty()) return;
+        if(courses == null) return;
 
         for(Course c : courses){
             int progress = student.getProgress(c);
@@ -141,17 +160,20 @@ public class StudentDashboardFrame extends JFrame {
         if(enrolledTable.getRowCount() > 0){
             enrolledTable.getColumn("Action").setCellRenderer(new ButtonRenderer());
             enrolledTable.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "View", courseId -> {
-                if(courseId == -1) return;
                 Course c = courseService.getCourseById(courseId);
                 if(c != null) new LessonListFrame(student, c, this);
             }));
         }
     }
 
+    // ================= Refresh Certificates =================
     public void refreshCertificates() {
+        if (certificateTable.isEditing()) {
+            certificateTable.getCellEditor().stopCellEditing();
+        }
         certificateModel.setRowCount(0);
         List<Certificate> certs = student.getCertificates();
-        if(certs == null || certs.isEmpty()) return;
+        if(certs == null) return;
 
         for(Certificate cert : certs){
             Course c = courseService.getCourseById(cert.getCourseId());
@@ -162,10 +184,12 @@ public class StudentDashboardFrame extends JFrame {
         if(certificateTable.getRowCount() > 0){
             certificateTable.getColumn("Action").setCellRenderer(new ButtonRenderer());
             certificateTable.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "View/Download", row -> {
-                if(row == -1) return;
+                if(row < 0 || row >= student.getCertificates().size()) return;
                 Certificate cert = student.getCertificates().get(row);
                 Course c = courseService.getCourseById(cert.getCourseId());
-                CertificateGenerator.generatePDF(cert, student, c);
+                if(c != null){
+                    CertificateGenerator.generatePDF(student, c);
+                }
             }));
         }
     }
@@ -192,23 +216,16 @@ public class StudentDashboardFrame extends JFrame {
             this.button = new JButton(btnText);
             this.button.setOpaque(true);
             this.action = action;
-
-            button.addActionListener(e -> {
-                if(!clicked) return;
-                fireEditingStopped();
-            });
+            button.addActionListener(e -> fireEditingStopped());
         }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object valueObj, boolean isSelected, int row, int column){
-            value = -1;
-            if(row >= 0 && row < table.getRowCount()){
+            if(button.getText().equals("View/Download")){
+                value = row;
+            } else {
                 Object idObj = table.getValueAt(row, 0);
-                if(idObj instanceof Integer){
-                    value = (Integer) idObj;
-                } else if(idObj instanceof String) {
-                    value = row; // للشهادات نرسل رقم الصف
-                }
+                value = (idObj instanceof Integer) ? (Integer) idObj : -1;
             }
             clicked = true;
             return button;
@@ -217,21 +234,15 @@ public class StudentDashboardFrame extends JFrame {
         @Override
         public Object getCellEditorValue(){
             if(clicked && value != -1){
-                try {
-                    action.action(value);
-                } catch(Exception e){
-                    JOptionPane.showMessageDialog(null, "Error executing action: " + e.getMessage());
-                }
+                try { action.action(value); }
+                catch(Exception e){ JOptionPane.showMessageDialog(null, "Error: " + e.getMessage()); }
             }
             clicked = false;
             return "";
         }
 
         @Override
-        public boolean stopCellEditing() {
-            clicked = false;
-            return super.stopCellEditing();
-        }
+        public boolean stopCellEditing() { clicked = false; return super.stopCellEditing(); }
     }
 
     class ProgressRenderer extends JProgressBar implements TableCellRenderer {

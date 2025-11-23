@@ -1,8 +1,6 @@
 package com.example.ui;
 
-import com.example.models.Course;
-import com.example.models.Lesson;
-import com.example.models.Student;
+import com.example.models.*;
 import com.example.services.CourseService;
 
 import javax.swing.*;
@@ -16,6 +14,13 @@ public class LessonViewerFrame extends JFrame {
     private StudentDashboardFrame dashboard;
 
     public LessonViewerFrame(Lesson lesson, Student student, Course course, StudentDashboardFrame dashboard){
+
+        if(!lesson.isUnlocked(student, course)){
+            JOptionPane.showMessageDialog(null, "Complete the previous quiz to unlock this lesson.", "Locked", JOptionPane.WARNING_MESSAGE);
+            dispose();
+            return;
+        }
+
         this.lesson = lesson;
         this.student = student;
         this.course = course;
@@ -30,24 +35,31 @@ public class LessonViewerFrame extends JFrame {
         JPanel mainPanel = new JPanel(new BorderLayout(10,10));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
+        // محتوى الدرس
         JTextArea contentArea = new JTextArea(lesson.getContent());
         contentArea.setWrapStyleWord(true);
         contentArea.setLineWrap(true);
         contentArea.setEditable(false);
         mainPanel.add(new JScrollPane(contentArea), BorderLayout.CENTER);
 
+        // أزرار الإجراءات
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         JButton markBtn = new JButton("Mark Lesson as Completed");
         markBtn.addActionListener(e -> markCompleted());
-        mainPanel.add(markBtn, BorderLayout.SOUTH);
+        buttonPanel.add(markBtn);
 
-        add(mainPanel);
-        setVisible(true);
+        // إذا فيه Quiz مرتبط بالدرس
         if(lesson.getQuiz() != null){
             JButton quizBtn = new JButton("Take Quiz");
             quizBtn.addActionListener(e -> new QuizFrame(lesson.getQuiz(), student, lesson, course, dashboard));
-            mainPanel.add(quizBtn, BorderLayout.NORTH);
+            buttonPanel.add(quizBtn);
         }
 
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        add(mainPanel);
+        setVisible(true);
     }
 
     private void markCompleted(){

@@ -1,8 +1,6 @@
 package com.example.ui;
 
-import com.example.models.Course;
-import com.example.models.Lesson;
-import com.example.models.Student;
+import com.example.models.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,6 +33,13 @@ public class LessonListFrame extends JFrame {
             int idx = lessonJList.getSelectedIndex();
             if(idx >= 0){
                 Lesson l = course.getLessons().get(idx);
+                if(!l.isUnlocked(student, course)){
+                    JOptionPane.showMessageDialog(this,
+                            "You must complete the previous quiz to unlock this lesson.",
+                            "Lesson Locked",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 new LessonViewerFrame(l, student, course, dashboard);
             }
         });
@@ -47,7 +52,12 @@ public class LessonListFrame extends JFrame {
     private void refreshList(){
         listModel.clear();
         for(Lesson l : course.getLessons()){
-            listModel.addElement(l.getTitle());
+            boolean unlocked = l.isUnlocked(student, course);
+            String title = l.getTitle() + (unlocked ? " (Open)" : " (Locked)");
+            if(student.hasCompletedLesson(l)){
+                title += " ✅"; // علامة للدرس المكتمل
+            }
+            listModel.addElement(title);
         }
     }
 }
