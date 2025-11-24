@@ -107,6 +107,7 @@
           2
         ],
         "quizScores": {},
+        "passedQuizzes": {},
         "certificates": [],
         "userId": 2,
         "username": "yossef",
@@ -152,6 +153,7 @@
           6
         ],
         "quizScores": {},
+        "passedQuizzes": {},
         "certificates": [],
         "userId": 2,
         "username": "yossef",
@@ -191,6 +193,7 @@
           6
         ],
         "quizScores": {},
+        "passedQuizzes": {},
         "certificates": [],
         "userId": 2,
         "username": "yossef",
@@ -231,6 +234,7 @@
           6
         ],
         "quizScores": {},
+        "passedQuizzes": {},
         "certificates": [],
         "userId": 2,
         "username": "yossef",
@@ -240,5 +244,252 @@
       }
     ],
     "status": "PENDING"
+  },
+  {
+    "courseId": 8,
+    "title": "Database",
+    "description": "CCE",
+    "instructor": {
+      "userId": 18,
+      "username": "hamdy",
+      "email": "hamdy@gmail.com",
+      "passwordHash": "91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203",
+      "role": "instructor"
+    },
+    "instructorEmail": "hamdy@gmail.com",
+    "lessons": [
+      {
+        "lessonId": 7,
+        "title": "a",
+        "content": "a",
+        "resources": [],
+        "quiz": {
+          "title": "Choose",
+          "quizId": 1,
+          "questions": [
+            {
+              "questionText": "aa",
+              "options": [
+                "1",
+                "2",
+                "3",
+                "4"
+              ],
+              "correctAnswer": 3
+            },
+            {
+              "questionText": "b",
+              "options": [
+                "a",
+                "b",
+                "c",
+                "d"
+              ],
+              "correctAnswer": 3
+            }
+          ],
+          "studentAnswers": [
+            {
+              "studentId": 19,
+              "question": {
+                "questionText": "aa",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "4"
+                ],
+                "correctAnswer": 3
+              },
+              "selectedOption": 3
+            },
+            {
+              "studentId": 19,
+              "question": {
+                "questionText": "b",
+                "options": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ],
+                "correctAnswer": 3
+              },
+              "selectedOption": 2
+            },
+            {
+              "studentId": 2,
+              "question": {
+                "questionText": "aa",
+                "options": [
+                  "1",
+                  "2",
+                  "3",
+                  "4"
+                ],
+                "correctAnswer": 3
+              },
+              "selectedOption": 3
+            },
+            {
+              "studentId": 2,
+              "question": {
+                "questionText": "b",
+                "options": [
+                  "a",
+                  "b",
+                  "c",
+                  "d"
+                ],
+                "correctAnswer": 3
+              },
+              "selectedOption": 3
+            }
+          ],
+          "passingScore": 50
+        }
+      },
+      {
+        "lessonId": 8,
+        "title": "b",
+        "content": "b",
+        "resources": [],
+        "quiz": {
+          "title": "Choose",
+          "quizId": 2,
+          "questions": [
+            {
+              "questionText": "a",
+              "options": [
+                "0",
+                "1",
+                "2",
+                "3"
+              ],
+              "correctAnswer": 1
+            }
+          ],
+          "studentAnswers": [
+            {
+              "studentId": 19,
+              "question": {
+                "questionText": "a",
+                "options": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "correctAnswer": 1
+              },
+              "selectedOption": 1
+            },
+            {
+              "studentId": 19,
+              "question": {
+                "questionText": "a",
+                "options": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "correctAnswer": 1
+              },
+              "selectedOption": 1
+            },
+            {
+              "studentId": 2,
+              "question": {
+                "questionText": "a",
+                "options": [
+                  "0",
+                  "1",
+                  "2",
+                  "3"
+                ],
+                "correctAnswer": 1
+              },
+              "selectedOption": 1
+            }
+          ],
+          "passingScore": 50
+        }
+      }
+    ],
+    "enrolledStudents": [
+      {
+        "enrolledCourseIds": [
+          8
+        ],
+        "completedLessonIds": [
+          7,
+          8
+        ],
+        "quizScores": {
+          "7": 50,
+          "8": 100
+        },
+        "passedQuizzes": {
+          "1": true,
+          "2": true
+        },
+        "certificates": [
+          {
+            "certificateId": "259c964f-b066-402c-bddb-4f19bab14818",
+            "studentId": 19,
+            "courseId": 8,
+            "issueDate": "2025-11-24"
+          }
+        ],
+        "userId": 19,
+        "username": "hamada",
+        "email": "hamada@gmail.com",
+        "passwordHash": "937377f056160fc4b15e0b770c67136a5f03c15205b4d3bf918268fefa2c6d0a",
+        "role": "student"
+      },
+      {
+        "enrolledCourseIds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "completedLessonIds": [
+          1,
+          2,
+          6,
+          7,
+          8
+        ],
+        "quizScores": {
+          "7": 100,
+          "8": 100
+        },
+        "passedQuizzes": {
+          "1": true,
+          "2": true
+        },
+        "certificates": [
+          {
+            "certificateId": "128e6535-0bc1-4d43-ad3f-ea54f76535b9",
+            "studentId": 2,
+            "courseId": 8,
+            "issueDate": "2025-11-24"
+          }
+        ],
+        "userId": 2,
+        "username": "yossef",
+        "email": "yossef@gmail.com",
+        "passwordHash": "bcb15f821479b4d5772bd0ca866c00ad5f926e3580720659cc80d39c9d09802a",
+        "role": "student"
+      }
+    ],
+    "status": "APPROVED",
+    "approvedByAdminId": 17
   }
 ]

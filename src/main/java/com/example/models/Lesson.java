@@ -13,7 +13,7 @@ public class Lesson {
     private Quiz quiz;
 
 
-    public Lesson() {                   // ★ مهم لـ Gson
+    public Lesson() {
         this.lessonId = lessonCounter++;
         this.resources = new ArrayList<>();
     }
@@ -29,7 +29,7 @@ public class Lesson {
     public void setLessonId(int id){
         this.lessonId = id;
         if(id >= lessonCounter)
-            lessonCounter = id + 1;    // ★ يمنع تكرار IDs بعد reload
+            lessonCounter = id + 1;
     }
 
     public void setResources(List<String> resources){

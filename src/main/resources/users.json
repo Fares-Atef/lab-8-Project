@@ -14,15 +14,41 @@
       4,
       5,
       6,
-      7
+      7,
+      8
     ],
     "completedLessonIds": [
       1,
       2,
-      6
+      6,
+      7,
+      8,
+      3,
+      4,
+      5
     ],
-    "quizScores": {},
-    "certificates": [],
+    "quizScores": {
+      "7": 100,
+      "8": 100
+    },
+    "passedQuizzes": {
+      "1": true,
+      "2": true
+    },
+    "certificates": [
+      {
+        "certificateId": "eaeacf51-f423-4be3-90e5-ee82492adb0e",
+        "studentId": 2,
+        "courseId": 2,
+        "issueDate": "2025-11-24"
+      },
+      {
+        "certificateId": "c70bd61c-e49a-424b-a1d0-025d6bc5acb1",
+        "studentId": 2,
+        "courseId": 4,
+        "issueDate": "2025-11-24"
+      }
+    ],
     "userId": 2,
     "username": "yossef",
     "email": "yossef@gmail.com",
@@ -49,11 +75,56 @@
     ],
     "completedLessonIds": [],
     "quizScores": {},
+    "passedQuizzes": {},
     "certificates": [],
     "userId": 8,
     "username": "Salem",
     "email": "salem@gmail.com",
     "passwordHash": "af41e68e1309fa29a5044cbdc36b90a3821d8807e68c7675a6c495112bc8a55f",
+    "role": "student"
+  },
+  {
+    "userId": 17,
+    "username": "admin",
+    "email": "admin@system.com",
+    "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "role": "admin"
+  },
+  {
+    "userId": 18,
+    "username": "hamdy",
+    "email": "hamdy@gmail.com",
+    "passwordHash": "91b4d142823f7d20c5f08df69122de43f35f057a988d9619f6d3138485c9a203",
+    "role": "instructor"
+  },
+  {
+    "enrolledCourseIds": [
+      8
+    ],
+    "completedLessonIds": [
+      7,
+      8
+    ],
+    "quizScores": {
+      "7": 50,
+      "8": 100
+    },
+    "passedQuizzes": {
+      "1": true,
+      "2": true
+    },
+    "certificates": [
+      {
+        "certificateId": "259c964f-b066-402c-bddb-4f19bab14818",
+        "studentId": 19,
+        "courseId": 8,
+        "issueDate": "2025-11-24"
+      }
+    ],
+    "userId": 19,
+    "username": "hamada",
+    "email": "hamada@gmail.com",
+    "passwordHash": "937377f056160fc4b15e0b770c67136a5f03c15205b4d3bf918268fefa2c6d0a",
     "role": "student"
   }
 ]

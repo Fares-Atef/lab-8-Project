@@ -8,8 +8,8 @@ public class Quiz {
     private String title;
     private int quizId;
     private List<Question> questions;
-    private List<StudentAnswer> studentAnswers; // تخزين إجابات الطلاب
-    private int passingScore = 50; // حد النجاح افتراضي 50%
+    private List<StudentAnswer> studentAnswers;
+    private int passingScore = 50;
 
     public Quiz() {
         this.quizId = quizCounter++;
@@ -44,7 +44,6 @@ public class Quiz {
     public int getPassingScore() { return passingScore; }
     public void setPassingScore(int score) { this.passingScore = score; }
 
-    // حساب درجة الطالب بالنسبة المئوية
     public int calculateScoreForStudent(Student student) {
         if (questions == null || questions.isEmpty()) return 0;
         int correctCount = 0;
@@ -56,12 +55,10 @@ public class Quiz {
         return (int)((correctCount * 100.0) / questions.size());
     }
 
-    // التحقق إذا نجح الطالب
     public boolean hasStudentPassed(Student student) {
         return calculateScoreForStudent(student) >= passingScore;
     }
 
-    // حساب متوسط جميع الطلاب
     public double getAverageScore() {
         if(studentAnswers == null || studentAnswers.isEmpty()) return 0;
         double total = 0;

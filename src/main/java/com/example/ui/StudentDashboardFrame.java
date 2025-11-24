@@ -168,31 +168,48 @@ public class StudentDashboardFrame extends JFrame {
 
     // ================= Refresh Certificates =================
     public void refreshCertificates() {
+        // لو الجدول في وضع تحرير، نوقفه
         if (certificateTable.isEditing()) {
             certificateTable.getCellEditor().stopCellEditing();
         }
-        certificateModel.setRowCount(0);
-        List<Certificate> certs = student.getCertificates();
-        if(certs == null) return;
 
-        for(Certificate cert : certs){
+        // نمسح كل الصفوف القديمة
+        certificateModel.setRowCount(0);
+
+        List<Certificate> certs = student.getCertificates();
+        if (certs == null || certs.isEmpty()) return;
+
+        // نضيف كل الشهادات للجدول
+        for (Certificate cert : certs) {
+            if(cert == null) continue;
             Course c = courseService.getCourseById(cert.getCourseId());
             String courseTitle = (c != null) ? c.getTitle() : "Unknown";
-            certificateModel.addRow(new Object[]{cert.getCertificateId(), courseTitle, cert.getIssueDate(), "View/Download"});
+            certificateModel.addRow(new Object[]{
+                    cert.getCertificateId(),
+                    courseTitle,
+                    cert.getIssueDate(),
+                    "View/Download"
+            });
         }
 
-        if(certificateTable.getRowCount() > 0){
+        // إعداد زر View/Download
+        if (certificateTable.getRowCount() > 0) {
             certificateTable.getColumn("Action").setCellRenderer(new ButtonRenderer());
             certificateTable.getColumn("Action").setCellEditor(new ButtonEditor(new JCheckBox(), "View/Download", row -> {
-                if(row < 0 || row >= student.getCertificates().size()) return;
+                if (row < 0 || row >= student.getCertificates().size()) return;
+
                 Certificate cert = student.getCertificates().get(row);
-                Course c = courseService.getCourseById(cert.getCourseId());
-                if(c != null){
-                    CertificateGenerator.generatePDF(student, c);
+                if (cert == null) return;
+
+                Course course = courseService.getCourseById(cert.getCourseId());
+                if (course != null) {
+                    // هنا فقط نولد PDF بدون إنشاء شهادة جديدة
+                    CertificateGenerator.generatePDF(student, course);
                 }
             }));
         }
     }
+
 
     // ================= Renderers & Editors =================
     class ButtonRenderer extends JButton implements TableCellRenderer {

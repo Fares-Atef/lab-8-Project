@@ -12,7 +12,6 @@ public class Certificate {
 
     public Certificate() {}
 
-    // ميثود إنشاء شهادة جديدة تلقائياً
     public Certificate(int courseId, int studentId) {
         this.certificateId = UUID.randomUUID().toString();
         this.courseId = courseId;

@@ -80,7 +80,6 @@ public class Student extends User {
         if(course != null) checkCourseCompletion(course);
     }
 
-    // ===== Course Completion Check =====
     private void checkCourseCompletion(Course course){
         boolean allDone = true;
         for(Lesson l: course.getLessons()){
@@ -93,6 +92,9 @@ public class Student extends User {
         if(allDone && !hasCertificate(course)){
             Certificate cert = CertificateGenerator.generatePDF(this, course);
             addCertificate(cert);
+            // <-- مهم: حفظ المستخدم بعد إضافة الشهادة
+            com.example.database.JsonDatabaseManager.getInstance().saveUsers();
+
             JOptionPane.showMessageDialog(null,"Congratulations! You completed: "+course.getTitle());
         }
     }
